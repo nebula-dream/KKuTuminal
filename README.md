@@ -46,7 +46,7 @@ python main.py
 ## 디렉토리 구조
 
 ```
-kkuko-wordchain/
+kkutu/
 ├── main.py
 ├── src/
 │   ├── game/
