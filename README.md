@@ -62,4 +62,7 @@ kkutu/
 └── data/
     └── words.json
 ```
+
+---
+
 ![이미지](https://cdn.phototourl.com/free/2026-06-11-0d381a4c-a262-43e0-8872-9903a147035c.png)
