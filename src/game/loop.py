@@ -94,7 +94,6 @@ def select_first_word(state: GameState) -> str:
 
 
 def _get_show_word(state: GameState) -> Optional[str]:
-    """난이도에 맞는 /show 단어를 반환합니다."""
     required = state.get_next_char_required() if state.current_word else ""
     if not required:
         return None
@@ -112,28 +111,24 @@ def _get_show_word(state: GameState) -> Optional[str]:
     difficulty = state.difficulty
 
     if difficulty == "쉬움":
-        # 2~3글자 단어
         filtered = [w for w in available if 2 <= len(w) <= 3]
         if not filtered:
             filtered = available
         return random.choice(filtered)
 
     elif difficulty == "보통":
-        # 3~5글자 단어
         filtered = [w for w in available if 3 <= len(w) <= 5]
         if not filtered:
             filtered = available
         return random.choice(filtered)
 
     elif difficulty == "어려움":
-        # 6~9글자 단어
         filtered = [w for w in available if 6 <= len(w) <= 9]
         if not filtered:
             filtered = available
         return random.choice(filtered)
 
-    else:  # 극악
-        # 가장 긴 단어
+    else:  
         return max(available, key=lambda w: len(w))
 
 
@@ -236,7 +231,6 @@ def run_player_turn(
                 max_show = SHOW_MAX_USES.get(state.difficulty, 1)
                 show_remaining = max_show - show_count[0]
 
-                # 난이도별 안내 메시지
                 length_desc = {
                     "쉬움": "2~3글자",
                     "보통": "3~5글자",
