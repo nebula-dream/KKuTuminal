@@ -62,6 +62,8 @@ kkutu/
 └── data/
     └── words.json
 ```
+# 사진
+
 
 ---
 
