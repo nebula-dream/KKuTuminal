@@ -132,7 +132,6 @@ class CpuPlayer:
         state: GameState,
         candidates: list[str],
     ) -> Optional[str]:
-        """봇은 항상 가능한 단어를 찾으면 반드시 선택합니다 (확률적 실패 없음)."""
         if not candidates:
             return None
         available = [w for w in candidates if w not in state.used_words]
@@ -140,19 +139,16 @@ class CpuPlayer:
             return None
 
         if self.difficulty == "쉬움":
-            # 짧은 단어 선호 (2~3글자), 없으면 전체 중 임의 선택
             short = [w for w in available if len(w) <= 3]
             pool = short if short else available
             return random.choice(pool)
 
         if self.difficulty == "보통":
-            # 중간 길이 단어 선호 (3~4글자), 없으면 전체 중 임의 선택
             mid = [w for w in available if 3 <= len(w) <= 4]
             pool = mid if mid else available
             return random.choice(pool)
 
         if self.difficulty == "어려움":
-            # 길고 어려운 끝글자 선호, 상위권 중 선택
             scored = sorted(
                 available,
                 key=lambda w: len(w) * 10.0 + self._hard_ending_bonus(w) + random.uniform(0, 3),
@@ -161,7 +157,6 @@ class CpuPlayer:
             top_n = max(1, len(scored) // 5)
             return scored[random.randint(0, top_n - 1)]
 
-        # 극악: 항상 가장 길고 어려운 단어 선택 (무조건)
         scored = sorted(
             available,
             key=lambda w: (len(w), self._hard_ending_bonus(w)),
@@ -181,6 +176,5 @@ class CpuPlayer:
         return [w for w in candidates if w not in state.used_words]
 
     def make_move(self, state: GameState) -> Optional[str]:
-        """봇이 반드시 단어를 찾아 반환합니다. 후보가 없을 때만 None 반환."""
         candidates = self.find_candidates(state)
         return self.choose_word(state, candidates)
